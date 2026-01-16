@@ -66,3 +66,22 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+table {
+  padding: 0 10px 20px 30px;
+  border: 2px solid #ddd;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+td.right {
+  text-align: right;
+}
+
+td.amount::before {
+  content: '$';
+}

@@ -1,15 +1,17 @@
 import React from 'react';
 import type { ConsumptionGroups } from '../../types';
+import { tableStyle, tableTitleStyle } from './styles';
 
 interface ConsumptionTableProps {
   consumptionGroups: ConsumptionGroups;
+  paymentInfoGroupRowsCount: number;
 }
 
-function ConsumptionTable({ consumptionGroups }: ConsumptionTableProps) {
+function ConsumptionTable({ consumptionGroups, paymentInfoGroupRowsCount }: ConsumptionTableProps) {
   return (
     <div>
-      <h2>Payment Table</h2>
-      <table>
+      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount)}>Ordered</h2>
+      <table css={tableStyle}>
         <thead>
           <tr>
             <th>Style No.</th>

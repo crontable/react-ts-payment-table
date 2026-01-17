@@ -2,10 +2,11 @@ import ConsumptionTable from './ConsumptionTable';
 import PayableTable from './PayableTable';
 import TotalTable from './TotalTable';
 import { usePaymentContext } from '../../context/PaymentContext';
+import { paymentLayoutStyle } from './styles';
 
 function PaymentTable() {
   const {
-    state: { paymentData, consumptionGroups, loading },
+    state: { paymentData, consumptionGroups, paymentInfoGroups, loading },
     action: { getBreakdown },
   } = usePaymentContext();
 
@@ -13,11 +14,22 @@ function PaymentTable() {
     return <div>Loading...</div>;
   }
 
+  const paymentInfoGroupRowsCount = Object.keys(paymentInfoGroups[0])?.length - 1 || 0;
+
   return (
-    <div className="layout">
-      <ConsumptionTable consumptionGroups={consumptionGroups} />
-      <PayableTable consumptionGroups={consumptionGroups} paymentData={paymentData} getBreakdown={getBreakdown} />
-      <TotalTable consumptionGroups={consumptionGroups} paymentData={paymentData} />
+    <div css={paymentLayoutStyle}>
+      <ConsumptionTable consumptionGroups={consumptionGroups} paymentInfoGroupRowsCount={paymentInfoGroupRowsCount} />
+      <PayableTable
+        consumptionGroups={consumptionGroups}
+        paymentData={paymentData}
+        paymentInfoGroups={paymentInfoGroups}
+        getBreakdown={getBreakdown}
+      />
+      <TotalTable
+        consumptionGroups={consumptionGroups}
+        paymentData={paymentData}
+        paymentInfoGroupRowsCount={paymentInfoGroupRowsCount}
+      />
     </div>
   );
 }

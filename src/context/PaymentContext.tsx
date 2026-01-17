@@ -32,6 +32,18 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
     };
   }, [paymentData]);
 
+  const paymentInfoGroups = useMemo(() => {
+    if (!paymentData) return [];
+
+    return paymentData.payments.map((payment) => ({
+      paymentId: payment.id,
+      paymentDue: new Date(payment.paymentDueDate).toLocaleDateString('ko-KR'),
+      paymentDate: payment.paidAt ? new Date(payment.paidAt).toLocaleDateString('ko-KR') : '-',
+      attachment: payment.sourcingFiles.length > 0 ? payment.sourcingFiles.join(', ') : 'none',
+      memo: payment.memo ?? '-',
+    }));
+  }, [paymentData]);
+
   const getBreakdown = useCallback(
     (paymentId: number, consumptionId: number) => {
       return paymentData?.paymentBreakdowns.find((b) => b.paymentId === paymentId && b.itemId === consumptionId);
@@ -46,6 +58,7 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
           paymentData,
           loading,
           consumptionGroups,
+          paymentInfoGroups,
         },
         action: { getBreakdown },
       }}
@@ -57,6 +70,7 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
 
 export function usePaymentContext() {
   const context = useContext(PaymentContext);
+  console.log(context?.state.paymentInfoGroups);
   if (!context) {
     throw new Error('usePaymentContext must be used within a PaymentProvider');
   }

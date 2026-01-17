@@ -73,10 +73,19 @@ export interface ConsumptionGroups {
   grandTotal: number;
 }
 
+export interface PaymentInfoGroup {
+  paymentId: number;
+  paymentDue: string;
+  paymentDate: string;
+  attachment: string;
+  memo: string;
+}
+
 export interface PaymentContextValue {
   state: {
     paymentData: PaymentData | null;
     consumptionGroups: ConsumptionGroups;
+    paymentInfoGroups: PaymentInfoGroup[];
     loading: boolean;
   };
   action: {

@@ -1,19 +1,21 @@
 import React from 'react';
 import * as _ from 'lodash';
 import type { ConsumptionGroups, PaymentData } from '../../types';
+import { tableStyle, tableTitleStyle } from './styles';
 
 interface TotalTableProps {
   consumptionGroups: ConsumptionGroups;
   paymentData: PaymentData | null;
+  paymentInfoGroupRowsCount: number;
 }
 
-function TotalTable({ consumptionGroups, paymentData }: TotalTableProps) {
+function TotalTable({ consumptionGroups, paymentData, paymentInfoGroupRowsCount }: TotalTableProps) {
   if (!paymentData) return null;
 
   return (
     <div>
-      <h2>Total</h2>
-      <table>
+      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount)}>Total</h2>
+      <table css={tableStyle}>
         <thead>
           <tr>
             <th>Qty</th>

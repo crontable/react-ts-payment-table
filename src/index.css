@@ -67,26 +67,6 @@ button:focus-visible {
   }
 } */
 
-table {
-  padding: 0 10px 20px 30px;
-  border: 2px solid #ddd;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-td.right {
-  text-align: right;
-}
-
-td.amount::before {
-  content: '$';
-}
-
-div.layout {
-  display: flex;
-  gap: 40px;
+* {
+  box-sizing: border-box;
 }

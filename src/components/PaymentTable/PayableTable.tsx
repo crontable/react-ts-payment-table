@@ -1,50 +1,48 @@
 import React from 'react';
 import * as _ from 'lodash';
-import type { ConsumptionGroups, PaymentData, PaymentBreakdown } from '../../types';
+import type { ConsumptionGroups, PaymentData, PaymentBreakdown, PaymentInfoGroup } from '../../types';
+import { tableStyle } from './styles';
 
 interface PayableTableProps {
   consumptionGroups: ConsumptionGroups;
   paymentData: PaymentData | null;
+  paymentInfoGroups: PaymentInfoGroup[];
   getBreakdown: (paymentId: number, consumptionId: number) => PaymentBreakdown | undefined;
 }
 
-function PayableTable({ consumptionGroups, paymentData, getBreakdown }: PayableTableProps) {
+function PayableTable({ consumptionGroups, paymentData, paymentInfoGroups, getBreakdown }: PayableTableProps) {
   if (!paymentData) return null;
 
   return (
     <div>
-      <h2>Payable</h2>
-      {paymentData.payments.map((payment) => {
-        const allBreakdowns = paymentData.paymentBreakdowns.filter((b) => b.paymentId === payment.id);
+      {paymentInfoGroups.map((paymentInfo) => {
+        const allBreakdowns = paymentData.paymentBreakdowns.filter((b) => b.paymentId === paymentInfo.paymentId);
         const grandTotalShippedQty = _.sumBy(allBreakdowns, 'shippedQuantity');
         const grandTotalAmount = _.sumBy(allBreakdowns, 'amount');
 
         return (
-          <React.Fragment key={payment.id}>
-            <table>
+          <React.Fragment key={paymentInfo.paymentId}>
+            <table css={tableStyle}>
               <tbody>
                 <tr>
                   <th colSpan={2}>Payment Due</th>
-                  <td>2024.12.19.</td>
+                  <td>{paymentInfo.paymentDue}</td>
                 </tr>
                 <tr>
                   <th colSpan={2}>Payment Date</th>
-                  <td>2024.12.18.</td>
+                  <td>{paymentInfo.paymentDate}</td>
                 </tr>
                 <tr>
                   <th colSpan={2}>Attatchment</th>
-                  <td>wthenafilenameisoolonglikethiswow.pdf</td>
+                  <td>{paymentInfo.attachment}</td>
                 </tr>
                 <tr>
                   <th colSpan={2}>Memo</th>
-                  <td>memo content value blah blah</td>
-                </tr>
-                <tr>
-                  <th></th>
+                  <td>{paymentInfo.memo}</td>
                 </tr>
               </tbody>
             </table>
-            <table>
+            <table css={tableStyle}>
               <thead>
                 <tr>
                   <th>Shipped Qty</th>
@@ -54,14 +52,14 @@ function PayableTable({ consumptionGroups, paymentData, getBreakdown }: PayableT
               </thead>
               <tbody>
                 {consumptionGroups.groups.map((group) => {
-                  const groupBreakdowns = group.items.map((item) => getBreakdown(payment.id, item.id));
+                  const groupBreakdowns = group.items.map((item) => getBreakdown(paymentInfo.paymentId, item.id));
                   const subTotalShippedQty = _.sumBy(groupBreakdowns, (b) => b?.shippedQuantity ?? 0);
                   const subTotalAmount = _.sumBy(groupBreakdowns, (b) => b?.amount ?? 0);
 
                   return (
                     <React.Fragment key={group.salesOrderId}>
                       {group.items.map((item) => {
-                        const breakdown = getBreakdown(payment.id, item.id);
+                        const breakdown = getBreakdown(paymentInfo.paymentId, item.id);
                         return (
                           <tr key={item.id}>
                             <td>{breakdown?.shippedQuantity ?? '-'}</td>

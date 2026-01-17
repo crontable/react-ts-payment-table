@@ -105,10 +105,13 @@ export interface PaymentContextValue {
 
     filters: FilterOptions;
     availableFilterOptions: AvailableFilterOptions;
+
+    isSearchEnabled: boolean;
   };
   action: {
     getBreakdown: (paymentId: number, consumptionId: number) => PaymentBreakdown | undefined;
     setFilter: (filters: Partial<FilterOptions>) => void;
     resetFilters: () => void;
+    toggleSearch: () => void;
   };
 }

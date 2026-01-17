@@ -80,6 +80,27 @@ const baseTitleStyle = css`
 export const tableTitleStyle = (rowCount: number) => css`
   ${baseTitleStyle}
   height: ${TABLE_ROW_HEIGHT * rowCount}px;
+  justify-content: space-between;
+  padding-right: 16px;
+`;
+
+export const searchToggleButtonStyle = (isActive: boolean) => css`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid ${isActive ? palette.grayScale[200] : palette.grayScale[150]};
+  border-radius: 4px;
+  background-color: ${isActive ? palette.grayScale[200] : palette.grayScale[0]};
+  color: ${isActive ? palette.grayScale[0] : palette.grayScale[200]};
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${isActive ? palette.grayScale[200] : palette.grayScale[150]};
+  }
 `;
 
 export const payableTitleStyle = css`

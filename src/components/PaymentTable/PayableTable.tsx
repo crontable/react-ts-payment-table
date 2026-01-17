@@ -6,7 +6,7 @@ import PaymentBreakdownTable from './PaymentBreakdownTable';
 
 function PayableTable() {
   const {
-    state: { consumptionGroups, paymentData, paymentInfoGroups },
+    state: { consumptionGroups, paymentData, paymentInfoGroups, isSearchEnabled },
     action: { getBreakdown },
   } = usePaymentContext();
 
@@ -23,9 +23,10 @@ function PayableTable() {
             <React.Fragment key={paymentInfo.paymentId}>
               <PaymentInfoTable paymentInfo={paymentInfo} />
               <PaymentBreakdownTable
-                consumptionGroups={consumptionGroups}
                 allBreakdowns={allBreakdowns}
+                consumptionGroups={consumptionGroups}
                 getBreakdown={getBreakdown}
+                isSearchEnabled={isSearchEnabled}
                 paymentId={paymentInfo.paymentId}
               />
             </React.Fragment>

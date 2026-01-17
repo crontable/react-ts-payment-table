@@ -5,7 +5,7 @@ import { usePaymentContext } from '../../context/PaymentContext';
 
 function TotalTable() {
   const {
-    state: { paymentData, consumptionGroups, paymentInfoGroupRowsCount },
+    state: { paymentData, consumptionGroups, paymentInfoGroupRowsCount, isSearchEnabled },
   } = usePaymentContext();
   if (!paymentData) return null;
 
@@ -18,9 +18,11 @@ function TotalTable() {
             <th>Qty</th>
             <th>Amount</th>
           </tr>
-          <tr>
-            <th colSpan={2}></th>
-          </tr>
+          {isSearchEnabled && (
+            <tr>
+              <th colSpan={2}></th>
+            </tr>
+          )}
         </thead>
         <tbody>
           {consumptionGroups.groups.map((group) => {

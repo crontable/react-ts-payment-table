@@ -1,13 +1,13 @@
 import React from 'react';
-import { tableStyle, tableTitleStyle } from './styles';
+import { tableStyle, tableTitleStyle, searchToggleButtonStyle } from './styles';
 import { usePaymentContext } from '../../context/PaymentContext';
 import SelectBox from '../base/SelectBox';
 import type { FilterOptions } from '../../types';
 
 function ConsumptionTable() {
   const {
-    state: { consumptionGroups, filters, availableFilterOptions, paymentInfoGroupRowsCount },
-    action: { setFilter },
+    state: { consumptionGroups, filters, availableFilterOptions, paymentInfoGroupRowsCount, isSearchEnabled },
+    action: { setFilter, toggleSearch },
   } = usePaymentContext();
 
   const renderFilterSelect = (filterKey: keyof FilterOptions, optionsKey: keyof typeof availableFilterOptions) => {
@@ -26,7 +26,12 @@ function ConsumptionTable() {
 
   return (
     <div css={{ minWidth: '980px' }}>
-      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount + 1)}>Ordered</h2>
+      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount + 1)}>
+        Ordered
+        <button css={searchToggleButtonStyle(isSearchEnabled)} onClick={toggleSearch}>
+          Search {isSearchEnabled ? 'ON' : 'OFF'}
+        </button>
+      </h2>
       <table css={tableStyle}>
         <thead>
           <tr>
@@ -39,16 +44,18 @@ function ConsumptionTable() {
             <th>U/price</th>
             <th>Amount</th>
           </tr>
-          <tr className="narrow-padding">
-            <th>{renderFilterSelect('styleNumber', 'styleNumbers')}</th>
-            <th></th>
-            <th>{renderFilterSelect('fabricName', 'fabricNames')}</th>
-            <th>{renderFilterSelect('fabricColor', 'fabricColors')}</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
+          {isSearchEnabled && (
+            <tr className="narrow-padding">
+              <th>{renderFilterSelect('styleNumber', 'styleNumbers')}</th>
+              <th></th>
+              <th>{renderFilterSelect('fabricName', 'fabricNames')}</th>
+              <th>{renderFilterSelect('fabricColor', 'fabricColors')}</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          )}
         </thead>
 
         <tbody>

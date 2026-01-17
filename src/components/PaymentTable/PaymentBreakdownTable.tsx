@@ -4,16 +4,18 @@ import { PAYABLE_TABLE_FIRST_COLUMN_WIDTH, tableStyle } from './styles';
 import type { ConsumptionGroups, PaymentBreakdown } from '../../types';
 
 interface PaymentBreakdownTableProps {
-  consumptionGroups: ConsumptionGroups;
   allBreakdowns: PaymentBreakdown[];
+  consumptionGroups: ConsumptionGroups;
   getBreakdown: (paymentId: number, consumptionId: number) => PaymentBreakdown | undefined;
+  isSearchEnabled: boolean;
   paymentId: number;
 }
 
 function PaymentBreakdownTable({
-  consumptionGroups,
   allBreakdowns,
+  consumptionGroups,
   getBreakdown,
+  isSearchEnabled,
   paymentId,
 }: PaymentBreakdownTableProps) {
   const grandTotalShippedQty = _.sumBy(allBreakdowns, 'shippedQuantity');
@@ -27,9 +29,11 @@ function PaymentBreakdownTable({
           <th>U/price</th>
           <th>Amount</th>
         </tr>
-        <tr>
-          <th colSpan={3}></th>
-        </tr>
+        {isSearchEnabled && (
+          <tr>
+            <th colSpan={3}></th>
+          </tr>
+        )}
       </thead>
       <tbody>
         {consumptionGroups.groups.map((group) => {

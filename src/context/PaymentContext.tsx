@@ -9,6 +9,7 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [filters, setFilters] = useState<FilterOptions>({});
+  const [isSearchEnabled, setIsSearchEnabled] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPaymentData = async () => {
@@ -67,6 +68,16 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
     setFilters({});
   }, []);
 
+  const toggleSearch = useCallback(() => {
+    setIsSearchEnabled((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    if (!isSearchEnabled) {
+      resetFilters();
+    }
+  }, [isSearchEnabled]);
+
   const paymentInfoGroupRowsCount = paymentInfoGroups[0] ? Object.keys(paymentInfoGroups[0]).length - 1 : 0;
 
   return (
@@ -82,8 +93,10 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
 
           filters,
           availableFilterOptions,
+
+          isSearchEnabled,
         },
-        action: { getBreakdown, setFilter, resetFilters },
+        action: { getBreakdown, setFilter, resetFilters, toggleSearch },
       }}
     >
       {children}

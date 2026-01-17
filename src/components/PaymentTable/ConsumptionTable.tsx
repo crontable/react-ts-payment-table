@@ -39,7 +39,7 @@ function ConsumptionTable() {
             <th>U/price</th>
             <th>Amount</th>
           </tr>
-          <tr>
+          <tr className="narrow-padding">
             <th>{renderFilterSelect('styleNumber', 'styleNumbers')}</th>
             <th></th>
             <th>{renderFilterSelect('fabricName', 'fabricNames')}</th>

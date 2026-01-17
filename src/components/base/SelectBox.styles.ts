@@ -8,8 +8,9 @@ export const containerStyle = css`
 export const triggerButtonStyle = css`
   width: 100%;
   min-width: 120px;
-  padding: 6px 32px 6px 12px;
-  font-size: 14px;
+  padding: 6px 12px;
+
+  font-size: 0.8rem;
   color: #333;
   background-color: #fff;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
@@ -18,6 +19,7 @@ export const triggerButtonStyle = css`
   background-size: 12px;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
+
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;

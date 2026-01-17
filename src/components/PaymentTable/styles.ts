@@ -26,7 +26,6 @@ export const paymentLayoutStyle = css`
 export const tableStyle = css`
   width: 100%;
   border-collapse: collapse;
-  padding: 0 10px 20px 30px;
   border: 2px solid${palette.grayScale[150]};
 
   td.right {
@@ -58,6 +57,11 @@ export const tableStyle = css`
     height: ${TABLE_ROW_HEIGHT}px;
     border: 1px solid ${palette.grayScale[150]};
     padding: 8px;
+  }
+
+  tr.narrow-padding th,
+  tr.narrow-padding td {
+    padding: 4px;
   }
 
   td {

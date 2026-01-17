@@ -14,7 +14,7 @@ function TotalTable({ consumptionGroups, paymentData, paymentInfoGroupRowsCount 
 
   return (
     <div>
-      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount)}>Total</h2>
+      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount + 1)}>Total</h2>
       <table css={tableStyle}>
         <thead>
           <tr>

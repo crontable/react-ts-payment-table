@@ -10,7 +10,7 @@ interface ConsumptionTableProps {
 function ConsumptionTable({ consumptionGroups, paymentInfoGroupRowsCount }: ConsumptionTableProps) {
   return (
     <div>
-      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount)}>Ordered</h2>
+      <h2 css={tableTitleStyle(paymentInfoGroupRowsCount + 1)}>Ordered</h2>
       <table css={tableStyle}>
         <thead>
           <tr>
@@ -41,7 +41,7 @@ function ConsumptionTable({ consumptionGroups, paymentInfoGroupRowsCount }: Cons
                 </tr>
               ))}
               <tr>
-                <td colSpan={7} className="right">
+                <td colSpan={7} className="meta-row right">
                   Sub.TTL
                 </td>
                 <td className="right amount">{group.subTotal.toLocaleString('ko-KR')}</td>
@@ -49,7 +49,7 @@ function ConsumptionTable({ consumptionGroups, paymentInfoGroupRowsCount }: Cons
             </React.Fragment>
           ))}
           <tr>
-            <td colSpan={7} className="right">
+            <td colSpan={7} className="meta-row right">
               G.TTL
             </td>
             <td className="right amount">{consumptionGroups.grandTotal.toLocaleString('ko-KR')}</td>

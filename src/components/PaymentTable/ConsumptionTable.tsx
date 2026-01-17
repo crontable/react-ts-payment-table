@@ -66,16 +66,16 @@ function ConsumptionTable() {
                   <td className="right amount">{item.orderAmount.toLocaleString('ko-KR')}</td>
                 </tr>
               ))}
-              <tr>
-                <td colSpan={7} className="meta-row right">
+              <tr className="meta-row">
+                <td colSpan={7} className="right">
                   Sub.TTL
                 </td>
                 <td className="right amount">{group.subTotal.toLocaleString('ko-KR')}</td>
               </tr>
             </React.Fragment>
           ))}
-          <tr>
-            <td colSpan={7} className="meta-row right">
+          <tr className="meta-row">
+            <td colSpan={7} className="right">
               G.TTL
             </td>
             <td className="right amount">{consumptionGroups.grandTotal.toLocaleString('ko-KR')}</td>

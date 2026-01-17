@@ -49,7 +49,7 @@ function PaymentBreakdownTable({
                   </tr>
                 );
               })}
-              <tr className="sub-total-row">
+              <tr className="sub-total-row meta-row">
                 <td className="right">{subTotalShippedQty}</td>
                 <td className="right">-</td>
                 <td className="right amount">{subTotalAmount.toLocaleString('ko-KR')}</td>
@@ -58,7 +58,7 @@ function PaymentBreakdownTable({
           );
         })}
 
-        <tr className="grand-total-row">
+        <tr className="grand-total-row meta-row">
           <td className="right">{grandTotalShippedQty}</td>
           <td className="right">-</td>
           <td className="right amount">{grandTotalAmount.toLocaleString('ko-KR')}</td>

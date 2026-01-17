@@ -50,7 +50,7 @@ function TotalTable() {
                     </tr>
                   );
                 })}
-                <tr className="sub-total-row">
+                <tr className="sub-total-row meta-row">
                   <td>{groupTotalQty}</td>
                   <td className="right amount">{groupTotalAmount.toLocaleString('ko-KR')}</td>
                 </tr>
@@ -58,7 +58,7 @@ function TotalTable() {
             );
           })}
 
-          <tr className="grand-total-row">
+          <tr className="grand-total-row meta-row">
             <td>{_.sumBy(paymentData.paymentBreakdowns, 'shippedQuantity')}</td>
             <td className="right amount">{_.sumBy(paymentData.paymentBreakdowns, 'amount').toLocaleString('ko-KR')}</td>
           </tr>

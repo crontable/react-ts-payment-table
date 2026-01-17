@@ -46,16 +46,16 @@ export const tableStyle = css`
     }
   }
 
-  th,
-  td.meta-row {
+  tr.meta-row > td,
+  th {
     font-weight: bold;
-    background-color: ${palette.grayScale[150]};
+    background-color: ${palette.grayScale[100]};
   }
 
   td,
   th {
     height: ${TABLE_ROW_HEIGHT}px;
-    border: 1px solid ${palette.grayScale[150]};
+    border: 1px solid ${palette.grayScale[100]};
     padding: 8px;
   }
 
@@ -73,6 +73,7 @@ const baseTitleStyle = css`
   display: flex;
   align-items: center;
   font-weight: bold;
+  padding-left: 16px;
   background-color: ${palette.grayScale[100]};
 `;
 

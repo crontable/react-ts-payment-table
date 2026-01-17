@@ -76,9 +76,9 @@ export interface ConsumptionGroups {
 export interface PaymentInfoGroup {
   paymentId: number;
   paymentDue: string;
-  paymentDate: string;
-  attachment: string;
-  memo: string;
+  paymentDate: string | null;
+  attachment: string[];
+  memo: string | null;
 }
 
 export interface FilterOptions {

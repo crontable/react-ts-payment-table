@@ -82,3 +82,11 @@ export const payableTitleStyle = css`
   height: ${TABLE_ROW_HEIGHT}px;
   border-bottom: 2px solid ${palette.grayScale[150]};
 `;
+
+export const horizontalScrollableStyle = css`
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: ${PAYABLE_TABLE_WIDTH - PAYABLE_TABLE_FIRST_COLUMN_WIDTH - 32}px;
+`;

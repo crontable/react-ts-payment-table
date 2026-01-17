@@ -1,7 +1,14 @@
 import React from 'react';
 import * as _ from 'lodash';
-import { PAYABLE_TABLE_FIRST_COLUMN_WIDTH, PAYABLE_TABLE_WIDTH, payableTitleStyle, tableStyle } from './styles';
+import {
+  horizontalScrollableStyle,
+  PAYABLE_TABLE_FIRST_COLUMN_WIDTH,
+  PAYABLE_TABLE_WIDTH,
+  payableTitleStyle,
+  tableStyle,
+} from './styles';
 import { usePaymentContext } from '../../context/PaymentContext';
+import Badge from '../base/Badge';
 
 function PayableTable() {
   const {
@@ -25,19 +32,34 @@ function PayableTable() {
                 <tbody>
                   <tr>
                     <th style={{ width: `${PAYABLE_TABLE_FIRST_COLUMN_WIDTH}px` }}>Payment Due</th>
-                    <td>{paymentInfo.paymentDue}</td>
+                    <td>
+                      <div css={horizontalScrollableStyle}>{paymentInfo.paymentDue}</div>
+                    </td>
                   </tr>
                   <tr>
                     <th>Payment Date</th>
-                    <td>{paymentInfo.paymentDate}</td>
+                    <td>
+                      <div css={horizontalScrollableStyle}>
+                        {paymentInfo.paymentDate ?? <Badge variant="warning">Not yet</Badge>}{' '}
+                        {paymentInfo.paymentDate && <Badge variant="primary">Paid</Badge>}
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <th>Attatchment</th>
-                    <td>{paymentInfo.attachment}</td>
+                    <td>
+                      <div css={horizontalScrollableStyle}>
+                        {paymentInfo.attachment.map((attachment) => (
+                          <Badge key={attachment}>{attachment}</Badge>
+                        ))}
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <th>Memo</th>
-                    <td>{paymentInfo.memo}</td>
+                    <td>
+                      <div css={horizontalScrollableStyle}>{paymentInfo.memo || '-'}</div>
+                    </td>
                   </tr>
                 </tbody>
               </table>

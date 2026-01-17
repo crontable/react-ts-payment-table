@@ -43,9 +43,9 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
     return paymentData.payments.map((payment) => ({
       paymentId: payment.id,
       paymentDue: new Date(payment.paymentDueDate).toLocaleDateString('ko-KR'),
-      paymentDate: payment.paidAt ? new Date(payment.paidAt).toLocaleDateString('ko-KR') : '-',
-      attachment: payment.sourcingFiles.length > 0 ? payment.sourcingFiles.join(', ') : 'none',
-      memo: payment.memo ?? '-',
+      paymentDate: payment.paidAt ? new Date(payment.paidAt).toLocaleDateString('ko-KR') : null,
+      attachment: payment.sourcingFiles,
+      memo: payment.memo,
     }));
   }, [paymentData]);
 

@@ -15,6 +15,9 @@ export const palette = {
 };
 
 export const paymentLayoutStyle = css`
+  width: 100%;
+  overflow-x: auto;
+
   display: flex;
   background-color: ${palette.grayScale[150]};
   gap: 8px;

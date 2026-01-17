@@ -18,6 +18,9 @@ function TotalTable() {
             <th>Qty</th>
             <th>Amount</th>
           </tr>
+          <tr>
+            <th colSpan={2}></th>
+          </tr>
         </thead>
         <tbody>
           {consumptionGroups.groups.map((group) => {

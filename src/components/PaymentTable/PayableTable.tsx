@@ -48,6 +48,9 @@ function PayableTable() {
                     <th>U/price</th>
                     <th>Amount</th>
                   </tr>
+                  <tr>
+                    <th colSpan={3}></th>
+                  </tr>
                 </thead>
                 <tbody>
                   {consumptionGroups.groups.map((group) => {

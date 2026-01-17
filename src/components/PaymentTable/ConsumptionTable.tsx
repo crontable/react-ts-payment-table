@@ -1,17 +1,31 @@
 import React from 'react';
 import { tableStyle, tableTitleStyle } from './styles';
 import { usePaymentContext } from '../../context/PaymentContext';
+import SelectBox from '../base/SelectBox';
+import type { FilterOptions } from '../../types';
 
 function ConsumptionTable() {
   const {
     state: { consumptionGroups, filters, availableFilterOptions, paymentInfoGroupRowsCount },
-    action: { setFilter, resetFilters },
+    action: { setFilter },
   } = usePaymentContext();
 
-  console.log(filters, availableFilterOptions, setFilter, resetFilters, paymentInfoGroupRowsCount);
+  const renderFilterSelect = (filterKey: keyof FilterOptions, optionsKey: keyof typeof availableFilterOptions) => {
+    const options = availableFilterOptions[optionsKey];
+    const value = filters[filterKey] || '';
+
+    return (
+      <SelectBox
+        options={options.map((option) => ({ label: option, value: option }))}
+        value={value}
+        onChange={(newValue) => setFilter({ [filterKey]: newValue || undefined })}
+        placeholder="전체"
+      />
+    );
+  };
 
   return (
-    <div>
+    <div css={{ minWidth: '980px' }}>
       <h2 css={tableTitleStyle(paymentInfoGroupRowsCount + 1)}>Ordered</h2>
       <table css={tableStyle}>
         <thead>
@@ -24,6 +38,16 @@ function ConsumptionTable() {
             <th>Unit</th>
             <th>U/price</th>
             <th>Amount</th>
+          </tr>
+          <tr>
+            <th>{renderFilterSelect('styleNumber', 'styleNumbers')}</th>
+            <th></th>
+            <th>{renderFilterSelect('fabricName', 'fabricNames')}</th>
+            <th>{renderFilterSelect('fabricColor', 'fabricColors')}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
 

@@ -70,6 +70,7 @@ function App() {
             </tbody>
           </table>
         </div>
+        <hr />
         <div>
           <h2>Payable</h2>
           {MOCK_DATA.payments.map((payment) => {
@@ -95,7 +96,7 @@ function App() {
                     </tr>
                     <tr>
                       <th colSpan={2}>Memo</th>
-                      <td>memo content value blahb blah</td>
+                      <td>memo content value blah blah</td>
                     </tr>
                     <tr>
                       <th></th>
@@ -147,6 +148,59 @@ function App() {
               </React.Fragment>
             );
           })}
+        </div>
+        <hr />
+        <div>
+          <h2>Total</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Qty</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.groups.map((group) => {
+                const groupTotalQty = group.items.reduce((sum, item) => {
+                  const itemTotal = MOCK_DATA.paymentBreakdowns
+                    .filter((b) => b.itemId === item.id)
+                    .reduce((s, b) => s + b.shippedQuantity, 0);
+                  return sum + itemTotal;
+                }, 0);
+                const groupTotalAmount = group.items.reduce((sum, item) => {
+                  const itemTotal = MOCK_DATA.paymentBreakdowns
+                    .filter((b) => b.itemId === item.id)
+                    .reduce((s, b) => s + b.amount, 0);
+                  return sum + itemTotal;
+                }, 0);
+
+                return (
+                  <React.Fragment key={group.salesOrderId}>
+                    {group.items.map((item) => {
+                      const itemBreakdowns = MOCK_DATA.paymentBreakdowns.filter((b) => b.itemId === item.id);
+                      const totalQty = _.sumBy(itemBreakdowns, 'shippedQuantity');
+                      const totalAmount = _.sumBy(itemBreakdowns, 'amount');
+                      return (
+                        <tr key={item.id}>
+                          <td>{totalQty}</td>
+                          <td className="right amount">{totalAmount.toLocaleString('ko-KR')}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr className="sub-total-row">
+                      <td>{groupTotalQty}</td>
+                      <td className="right amount">{groupTotalAmount.toLocaleString('ko-KR')}</td>
+                    </tr>
+                  </React.Fragment>
+                );
+              })}
+
+              <tr className="grand-total-row">
+                <td>{_.sumBy(MOCK_DATA.paymentBreakdowns, 'shippedQuantity')}</td>
+                <td className="right amount">{_.sumBy(MOCK_DATA.paymentBreakdowns, 'amount').toLocaleString('ko-KR')}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

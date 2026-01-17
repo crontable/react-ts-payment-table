@@ -1,13 +1,15 @@
 import React from 'react';
-import type { ConsumptionGroups } from '../../types';
 import { tableStyle, tableTitleStyle } from './styles';
+import { usePaymentContext } from '../../context/PaymentContext';
 
-interface ConsumptionTableProps {
-  consumptionGroups: ConsumptionGroups;
-  paymentInfoGroupRowsCount: number;
-}
+function ConsumptionTable() {
+  const {
+    state: { consumptionGroups, filters, availableFilterOptions, paymentInfoGroupRowsCount },
+    action: { setFilter, resetFilters },
+  } = usePaymentContext();
 
-function ConsumptionTable({ consumptionGroups, paymentInfoGroupRowsCount }: ConsumptionTableProps) {
+  console.log(filters, availableFilterOptions, setFilter, resetFilters, paymentInfoGroupRowsCount);
+
   return (
     <div>
       <h2 css={tableTitleStyle(paymentInfoGroupRowsCount + 1)}>Ordered</h2>

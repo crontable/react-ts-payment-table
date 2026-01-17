@@ -1,13 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { MOCK_DATA } from '../Constant';
-import * as _ from 'lodash';
-import type { PaymentData, PaymentContextValue } from '../types';
+import type { PaymentData, PaymentContextValue, FilterOptions } from '../types';
+import { extractAvailableFilterOptions, filterConsumptions, groupConsumptions } from '../domain/utils/payment';
 
 const PaymentContext = createContext<PaymentContextValue | null>(null);
 
 export function PaymentProvider({ children }: { children: React.ReactNode }) {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [filters, setFilters] = useState<FilterOptions>({});
 
   useEffect(() => {
     const fetchPaymentData = async () => {
@@ -19,18 +20,22 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
     fetchPaymentData();
   }, []);
 
+  const availableFilterOptions = useMemo(
+    () =>
+      paymentData
+        ? extractAvailableFilterOptions(paymentData.consumptions)
+        : { styleNumbers: [], fabricNames: [], fabricColors: [] },
+    [paymentData],
+  );
+
   const consumptionGroups = useMemo(() => {
-    const grouped = _.groupBy(paymentData?.consumptions, 'salesOrder.id');
-    const groups = Object.entries(grouped).map(([salesOrderId, items]) => ({
-      salesOrderId,
-      items,
-      subTotal: _.sumBy(items, 'orderAmount'),
-    }));
-    return {
-      groups,
-      grandTotal: _.sumBy(groups, 'subTotal'),
-    };
-  }, [paymentData]);
+    if (!paymentData) {
+      return { groups: [], grandTotal: 0 };
+    }
+
+    const filteredConsumptions = filterConsumptions(paymentData.consumptions, filters);
+    return groupConsumptions(filteredConsumptions);
+  }, [paymentData, filters]);
 
   const paymentInfoGroups = useMemo(() => {
     if (!paymentData) return [];
@@ -51,16 +56,34 @@ export function PaymentProvider({ children }: { children: React.ReactNode }) {
     [paymentData],
   );
 
+  const setFilter = useCallback((newFilters: Partial<FilterOptions>) => {
+    setFilters((prev) => ({
+      ...prev,
+      ...newFilters,
+    }));
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setFilters({});
+  }, []);
+
+  const paymentInfoGroupRowsCount = paymentInfoGroups[0] ? Object.keys(paymentInfoGroups[0]).length - 1 : 0;
+
   return (
     <PaymentContext
       value={{
         state: {
           paymentData,
+          paymentInfoGroupRowsCount,
           loading,
+
           consumptionGroups,
           paymentInfoGroups,
+
+          filters,
+          availableFilterOptions,
         },
-        action: { getBreakdown },
+        action: { getBreakdown, setFilter, resetFilters },
       }}
     >
       {children}

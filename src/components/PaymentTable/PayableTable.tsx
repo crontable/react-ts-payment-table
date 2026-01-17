@@ -1,16 +1,13 @@
 import React from 'react';
 import * as _ from 'lodash';
-import type { ConsumptionGroups, PaymentData, PaymentBreakdown, PaymentInfoGroup } from '../../types';
 import { PAYABLE_TABLE_FIRST_COLUMN_WIDTH, PAYABLE_TABLE_WIDTH, payableTitleStyle, tableStyle } from './styles';
+import { usePaymentContext } from '../../context/PaymentContext';
 
-interface PayableTableProps {
-  consumptionGroups: ConsumptionGroups;
-  paymentData: PaymentData | null;
-  paymentInfoGroups: PaymentInfoGroup[];
-  getBreakdown: (paymentId: number, consumptionId: number) => PaymentBreakdown | undefined;
-}
-
-function PayableTable({ consumptionGroups, paymentData, paymentInfoGroups, getBreakdown }: PayableTableProps) {
+function PayableTable() {
+  const {
+    state: { consumptionGroups, paymentData, paymentInfoGroups },
+    action: { getBreakdown },
+  } = usePaymentContext();
   if (!paymentData) return null;
 
   return (

@@ -81,14 +81,34 @@ export interface PaymentInfoGroup {
   memo: string;
 }
 
+export interface FilterOptions {
+  styleNumber?: string;
+  fabricName?: string;
+  fabricColor?: string;
+}
+
+export interface AvailableFilterOptions {
+  styleNumbers: string[];
+  fabricNames: string[];
+  fabricColors: string[];
+}
+
 export interface PaymentContextValue {
   state: {
-    paymentData: PaymentData | null;
     consumptionGroups: ConsumptionGroups;
+
+    paymentData: PaymentData | null;
     paymentInfoGroups: PaymentInfoGroup[];
+    paymentInfoGroupRowsCount: number;
+
     loading: boolean;
+
+    filters: FilterOptions;
+    availableFilterOptions: AvailableFilterOptions;
   };
   action: {
     getBreakdown: (paymentId: number, consumptionId: number) => PaymentBreakdown | undefined;
+    setFilter: (filters: Partial<FilterOptions>) => void;
+    resetFilters: () => void;
   };
 }

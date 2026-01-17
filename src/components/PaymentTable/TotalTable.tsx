@@ -1,15 +1,12 @@
 import React from 'react';
 import * as _ from 'lodash';
-import type { ConsumptionGroups, PaymentData } from '../../types';
 import { tableStyle, tableTitleStyle } from './styles';
+import { usePaymentContext } from '../../context/PaymentContext';
 
-interface TotalTableProps {
-  consumptionGroups: ConsumptionGroups;
-  paymentData: PaymentData | null;
-  paymentInfoGroupRowsCount: number;
-}
-
-function TotalTable({ consumptionGroups, paymentData, paymentInfoGroupRowsCount }: TotalTableProps) {
+function TotalTable() {
+  const {
+    state: { paymentData, consumptionGroups, paymentInfoGroupRowsCount },
+  } = usePaymentContext();
   if (!paymentData) return null;
 
   return (

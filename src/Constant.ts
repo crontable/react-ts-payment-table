@@ -1,4 +1,6 @@
-export const MOCK_DATA = {
+import type { PaymentData } from './types';
+
+export const MOCK_DATA: PaymentData = {
   payments: [
     {
       id: 17,

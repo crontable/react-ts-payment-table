@@ -85,3 +85,8 @@ td.right {
 td.amount::before {
   content: '$';
 }
+
+div.layout {
+  display: flex;
+  gap: 40px;
+}
